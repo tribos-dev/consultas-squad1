@@ -1,0 +1,25 @@
+server:
+  servlet:
+    context-path: /consultasesqueleto/api
+
+spring:
+  application:
+    name: consultasesqueleto
+
+  main:
+    allow-bean-definition-overriding: true
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: health,info,metrics
+
+fipe:
+  api:
+    base-url: https://parallelum.com.br/fipe/api/v1
+
+viacep:
+  api:
+    base-url: https://viacep.com.br
+
