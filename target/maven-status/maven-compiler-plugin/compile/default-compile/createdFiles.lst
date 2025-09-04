@@ -1,0 +1,11 @@
+br\com\wakax\consultasesqueleto\cep\domain\UfInfo.class
+br\com\wakax\consultasesqueleto\handler\ErrorApiResponse$ErrorApiResponseBuilder.class
+br\com\wakax\consultasesqueleto\handler\RestResponseEntityExceptionHandler.class
+br\com\wakax\consultasesqueleto\handler\ErrorApiResponse.class
+br\com\wakax\consultasesqueleto\handler\APIException.class
+br\com\wakax\consultasesqueleto\fipe\domain\Veiculo.class
+br\com\wakax\consultasesqueleto\handler\ErrorCode.class
+br\com\wakax\consultasesqueleto\cep\domain\Endereco.class
+br\com\wakax\consultasesqueleto\handler\RestResponseEntityExceptionHandler$1.class
+br\com\wakax\consultasesqueleto\fipe\domain\TipoVeiculo.class
+br\com\wakax\consultasesqueleto\handler\MessageUtil.class

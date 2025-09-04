@@ -1,6 +1,6 @@
 server:
   servlet:
-    context-path: /consultasesqueleto/api
+    context-path: /consultas/api
 
 spring:
   application:
