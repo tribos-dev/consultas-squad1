@@ -1,0 +1,505 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Consulta FIPE e CEP</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap');
+
+        body {
+            font-family: 'Roboto', sans-serif;
+            margin: 0;
+            padding: 20px;
+            line-height: 1.6;
+            background-color: #f4f7f9;
+            color: #333;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+        }
+
+        .container {
+            width: 100%;
+            max-width: 900px;
+            padding: 30px;
+            background-color: #fff;
+            border-radius: 12px;
+            box-shadow: 0 8px 24px rgba(0,0,0,0.1);
+        }
+
+        h1, h2, h3 {
+            color: #1a2a47;
+            border-bottom: 2px solid #e0e6f0;
+            padding-bottom: 10px;
+            margin-top: 25px;
+        }
+
+        h1 {
+            text-align: center;
+            color: #0056b3;
+            border-bottom: none;
+            font-weight: 700;
+        }
+
+        .input-group, .select-group {
+            margin-bottom: 20px;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 500;
+        }
+
+        input[type="text"], select {
+            width: 100%;
+            padding: 12px;
+            border: 1px solid #cdd4df;
+            border-radius: 8px;
+            box-sizing: border-box;
+            font-size: 16px;
+            transition: border-color 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        input[type="text"]:focus, select:focus {
+            outline: none;
+            border-color: #007bff;
+            box-shadow: 0 0 0 3px rgba(0, 123, 255, 0.25);
+        }
+        
+        button {
+            background-color: #007bff;
+            color: #fff;
+            padding: 12px 20px;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 16px;
+            font-weight: 500;
+            transition: background-color 0.3s ease, transform 0.1s ease;
+        }
+
+        button:hover {
+            background-color: #0056b3;
+            transform: translateY(-2px);
+        }
+
+        button:active {
+            transform: translateY(0);
+        }
+
+        button:disabled {
+            background-color: #cccccc;
+            cursor: not-allowed;
+            transform: none;
+        }
+
+        .result-box {
+            background-color: #f8f9fa;
+            padding: 20px;
+            border-radius: 10px;
+            margin-top: 20px;
+            border: 1px solid #e0e6f0;
+        }
+        
+        ul {
+            list-style-type: none;
+            padding: 0;
+            margin: 0;
+        }
+
+        li {
+            padding: 10px 0;
+            border-bottom: 1px dashed #e9ecef;
+        }
+        
+        li:last-child {
+            border-bottom: none;
+        }
+
+        .status-message {
+            margin-top: 15px;
+            padding: 10px;
+            border-radius: 8px;
+            font-weight: 500;
+            display: none;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .status-message.loading, .status-message.success, .status-message.error {
+            display: flex;
+        }
+
+        .status-message.loading {
+            color: #007bff;
+        }
+        .status-message.success {
+            color: #28a745;
+        }
+        .status-message.error {
+            color: #dc3545;
+        }
+        
+        .status-message::before {
+            content: '';
+            display: inline-block;
+            width: 16px;
+            height: 16px;
+            background-size: contain;
+        }
+        
+        .status-message.loading::before {
+            content: '';
+            border: 3px solid #007bff;
+            border-top: 3px solid transparent;
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        .status-message.success::before {
+            content: '✔';
+            color: #28a745;
+            font-weight: bold;
+        }
+
+        .status-message.error::before {
+            content: '✖';
+            color: #dc3545;
+            font-weight: bold;
+        }
+
+        @media (max-width: 768px) {
+            .container {
+                padding: 20px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Consulta Dinâmica da Tabela FIPE e CEP</h1>
+
+        <h2>Configuração</h2>
+        <div class="input-group">
+            <label for="password">Senha de Autenticação:</label>
+            <input type="text" id="password" placeholder="Insira a senha gerada">
+        </div>
+
+        <hr>
+
+        <h2>Consulta FIPE</h2>
+        <div class="select-group">
+            <label for="tipoVeiculo">Tipo de Veículo:</label>
+            <select id="tipoVeiculo" onchange="fetchMarcas()">
+                <option value="">Selecione...</option>
+                <option value="CARROS">Carros</option>
+                <option value="MOTOS">Motos</option>
+                <option value="CAMINHOES">Caminhões</option>
+            </select>
+        </div>
+        
+        <div class="select-group">
+            <label for="marcas">Marca:</label>
+            <select id="marcas" onchange="fetchModelos()" disabled>
+                <option value="">Selecione uma marca...</option>
+            </select>
+        </div>
+        
+        <div class="select-group">
+            <label for="modelos">Modelo:</label>
+            <select id="modelos" onchange="fetchAnos()" disabled>
+                <option value="">Selecione um modelo...</option>
+            </select>
+        </div>
+        
+        <div class="select-group">
+            <label for="anos">Ano:</label>
+            <select id="anos" disabled>
+                <option value="">Selecione um ano...</option>
+            </select>
+        </div>
+        
+        <button onclick="fetchValor()" id="btnValor" disabled>Consultar Valor</button>
+        <div id="statusFipe" class="status-message"></div>
+
+        <div class="result-box">
+            <h3>Resultado da Consulta FIPE</h3>
+            <div id="fipeResult"></div>
+        </div>
+
+        <hr>
+
+        <h2>Consulta de CEP</h2>
+        <div class="input-group">
+            <label for="cep">CEP:</label>
+            <input type="text" id="cep" placeholder="Ex: 58030220">
+            <button onclick="consultarCep()">Consultar CEP</button>
+        </div>
+        
+        <div class="result-box">
+            <h3>Resultado da Consulta de CEP</h3>
+            <div id="cepResult"></div>
+        </div>
+    </div>
+
+    <script>
+        const BASE_URL = 'http://localhost:8080/consultas/api';
+        const USERNAME = 'user';
+
+        document.getElementById('password').addEventListener('input', checkPassword);
+        document.getElementById('anos').addEventListener('change', checkYearSelection);
+        document.getElementById('cep').addEventListener('input', validateCepInput);
+
+        function getAuthHeader() {
+            const password = document.getElementById('password').value;
+            const credentials = `${USERNAME}:${password}`;
+            const encodedCredentials = btoa(credentials);
+            return `Basic ${encodedCredentials}`;
+        }
+        
+        function checkPassword() {
+            const password = document.getElementById('password').value;
+            const tipoVeiculoSelect = document.getElementById('tipoVeiculo');
+            if (password) {
+                tipoVeiculoSelect.disabled = false;
+            } else {
+                tipoVeiculoSelect.disabled = true;
+            }
+            limparCamposFipe();
+        }
+
+        function setStatus(elementId, message, type) {
+            const statusDiv = document.getElementById(elementId);
+            statusDiv.textContent = message;
+            statusDiv.className = `status-message ${type}`;
+        }
+
+        function limparCamposFipe(aPartirDe = 'marcas') {
+            const elementos = {
+                'marcas': document.getElementById('marcas'),
+                'modelos': document.getElementById('modelos'),
+                'anos': document.getElementById('anos')
+            };
+            const btnValor = document.getElementById('btnValor');
+            const resultDiv = document.getElementById('fipeResult');
+
+            let iniciarLimpeza = false;
+            for (let id in elementos) {
+                if (id === aPartirDe) {
+                    iniciarLimpeza = true;
+                }
+                if (iniciarLimpeza) {
+                    elementos[id].innerHTML = `<option value="">Selecione um ${id}...</option>`;
+                    elementos[id].disabled = true;
+                }
+            }
+            btnValor.disabled = true;
+            resultDiv.innerHTML = '';
+            document.getElementById('statusFipe').className = 'status-message';
+        }
+
+        async function fetchMarcas() {
+            const tipoVeiculo = document.getElementById('tipoVeiculo').value;
+            limparCamposFipe('marcas');
+            
+            if (!tipoVeiculo) return;
+
+            setStatus('statusFipe', 'Buscando marcas...', 'loading');
+            
+            try {
+                const url = `${BASE_URL}/fipe/marcas?tipoVeiculo=${tipoVeiculo}`;
+                const response = await fetch(url, {
+                    headers: { 'Authorization': getAuthHeader() }
+                });
+
+                if (!response.ok) {
+                    throw new Error('Erro ao buscar marcas. Verifique a senha e tente novamente.');
+                }
+                
+                const marcas = await response.json();
+                const marcasSelect = document.getElementById('marcas');
+                marcas.forEach(marca => {
+                    marcasSelect.innerHTML += `<option value="${marca.codigo}">${marca.nome}</option>`;
+                });
+                marcasSelect.disabled = false;
+                setStatus('statusFipe', 'Marcas carregadas com sucesso!', 'success');
+            } catch (error) {
+                setStatus('statusFipe', `Erro: ${error.message}`, 'error');
+            }
+        }
+
+        async function fetchModelos() {
+            const tipoVeiculo = document.getElementById('tipoVeiculo').value;
+            const codigoMarca = document.getElementById('marcas').value;
+            limparCamposFipe('modelos');
+            
+            if (!codigoMarca) return;
+
+            setStatus('statusFipe', 'Buscando modelos...', 'loading');
+
+            try {
+                const url = `${BASE_URL}/fipe/marcas/${codigoMarca}/modelos?tipoVeiculo=${tipoVeiculo}`;
+                const response = await fetch(url, {
+                    headers: { 'Authorization': getAuthHeader() }
+                });
+
+                if (!response.ok) {
+                    throw new Error('Erro ao buscar modelos.');
+                }
+                
+                const modelos = await response.json();
+                const modelosSelect = document.getElementById('modelos');
+                modelos.modelos.forEach(modelo => {
+                    modelosSelect.innerHTML += `<option value="${modelo.codigo}">${modelo.nome}</option>`;
+                });
+                modelosSelect.disabled = false;
+                setStatus('statusFipe', 'Modelos carregados com sucesso!', 'success');
+            } catch (error) {
+                setStatus('statusFipe', `Erro: ${error.message}`, 'error');
+            }
+        }
+        
+        async function fetchAnos() {
+            const tipoVeiculo = document.getElementById('tipoVeiculo').value;
+            const codigoMarca = document.getElementById('marcas').value;
+            const codigoModelo = document.getElementById('modelos').value;
+            limparCamposFipe('anos');
+            
+            if (!codigoModelo) return;
+
+            setStatus('statusFipe', 'Buscando anos...', 'loading');
+            
+            try {
+                const url = `${BASE_URL}/fipe/marcas/${codigoMarca}/modelos/${codigoModelo}/anos?tipoVeiculo=${tipoVeiculo}`;
+                const response = await fetch(url, {
+                    headers: { 'Authorization': getAuthHeader() }
+                });
+
+                if (!response.ok) {
+                    throw new Error('Erro ao buscar anos.');
+                }
+                
+                const anos = await response.json();
+                const anosSelect = document.getElementById('anos');
+                anos.forEach(ano => {
+                    anosSelect.innerHTML += `<option value="${ano.codigo}">${ano.nome}</option>`;
+                });
+                anosSelect.disabled = false;
+                setStatus('statusFipe', 'Anos carregados com sucesso!', 'success');
+            } catch (error) {
+                setStatus('statusFipe', `Erro: ${error.message}`, 'error');
+            }
+        }
+
+        function checkYearSelection() {
+            const codigoAno = document.getElementById('anos').value;
+            const btnValor = document.getElementById('btnValor');
+            btnValor.disabled = !codigoAno;
+        }
+
+        async function fetchValor() {
+            const tipoVeiculo = document.getElementById('tipoVeiculo').value;
+            const codigoMarca = document.getElementById('marcas').value;
+            const codigoModelo = document.getElementById('modelos').value;
+            const codigoAno = document.getElementById('anos').value;
+
+            setStatus('statusFipe', 'Buscando valor...', 'loading');
+            
+            try {
+                const url = `${BASE_URL}/fipe/marcas/${codigoMarca}/modelos/${codigoModelo}/anos/${codigoAno}?tipoVeiculo=${tipoVeiculo}`;
+                const response = await fetch(url, {
+                    headers: { 'Authorization': getAuthHeader() }
+                });
+
+                if (!response.ok) {
+                    throw new Error('Erro ao buscar valor. O ano/modelo pode não existir.');
+                }
+                
+                const valor = await response.json();
+                exibirResultadosValor('fipeResult', valor);
+                setStatus('statusFipe', 'Consulta de valor concluída com sucesso!', 'success');
+            } catch (error) {
+                setStatus('statusFipe', `Erro: ${error.message}`, 'error');
+            }
+        }
+        
+        function validateCepInput() {
+            const cepInput = document.getElementById('cep');
+            const value = cepInput.value.replace(/\D/g, ''); // Remove caracteres não numéricos
+            cepInput.value = value;
+        }
+
+        async function consultarCep() {
+            const cepDiv = document.getElementById('cepResult');
+            const cep = document.getElementById('cep').value.replace(/\D/g, '');
+            
+            if (cep.length !== 8) {
+                cepDiv.innerHTML = '<span class="status-message error">CEP inválido. Insira 8 dígitos.</span>';
+                return;
+            }
+
+            cepDiv.innerHTML = '<span class="status-message loading">Buscando CEP...</span>';
+
+            try {
+                const url = `${BASE_URL}/cep/${cep}`;
+                const response = await fetch(url, {
+                    headers: { 'Authorization': getAuthHeader() }
+                });
+                
+                if (!response.ok) {
+                    throw new Error('CEP não encontrado ou erro do servidor.');
+                }
+
+                const data = await response.json();
+                exibirResultadosCep('cepResult', data);
+            } catch (error) {
+                cepDiv.innerHTML = `<span class="status-message error">Erro: ${error.message}</span>`;
+                console.error('Erro:', error);
+            }
+        }
+
+        function exibirResultadosValor(elementId, data) {
+            const resultDiv = document.getElementById(elementId);
+            resultDiv.innerHTML = `
+                <ul>
+                    <li><strong>Valor:</strong> ${data.Valor}</li>
+                    <li><strong>Marca:</strong> ${data.Marca}</li>
+                    <li><strong>Modelo:</strong> ${data.Modelo}</li>
+                    <li><strong>Ano Modelo:</strong> ${data.AnoModelo}</li>
+                    <li><strong>Combustível:</strong> ${data.Combustivel}</li>
+                    <li><strong>Código FIPE:</strong> ${data.CodigoFipe}</li>
+                    <li><strong>Mês de Referência:</strong> ${data.MesReferencia}</li>
+                    <li><strong>Tipo de Veículo:</strong> ${data.TipoVeiculo}</li>
+                    <li><strong>Sigla Combustível:</strong> ${data.SiglaCombustivel}</li>
+                </ul>
+            `;
+        }
+
+        function exibirResultadosCep(elementId, data) {
+            const resultDiv = document.getElementById(elementId);
+            if (data.erro) {
+                resultDiv.innerHTML = '<span class="status-message error">CEP não encontrado.</span>';
+                return;
+            }
+            resultDiv.innerHTML = `
+                <ul>
+                    <li><strong>CEP:</strong> ${data.cep}</li>
+                    <li><strong>Logradouro:</strong> ${data.logradouro}</li>
+                    <li><strong>Bairro:</strong> ${data.bairro}</li>
+                    <li><strong>Cidade:</strong> ${data.localidade}</li>
+                    <li><strong>UF:</strong> ${data.uf}</li>
+                    <li><strong>DDD:</strong> ${data.ddd}</li>
+                </ul>
+            `;
+        }
+    </script>
+</body>
+</html>
