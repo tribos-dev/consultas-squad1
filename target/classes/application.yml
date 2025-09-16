@@ -1,19 +1,12 @@
+# Web Server
 server:
   servlet:
     context-path: /consultas/api
 
 spring:
   application:
-    name: consultasesqueleto
+    name: consultas
 
-  main:
-    allow-bean-definition-overriding: true
-
-management:
-  endpoints:
-    web:
-      exposure:
-        include: health,info,metrics
 
 fipe:
   api:
@@ -23,3 +16,8 @@ viacep:
   api:
     base-url: https://viacep.com.br
 
+
+ejc:
+  jwt:
+    expiracao: ${JWT_TEMPO_EXPIRACAO:15}
+    chave: ${JWT_CHAVE:123456}
