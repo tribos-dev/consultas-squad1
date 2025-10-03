@@ -115,4 +115,21 @@ public class RestResponseEntityExceptionHandler {
             });
     return errors;
   }
+
+  @ExceptionHandler(org.springframework.web.method.annotation.MethodArgumentTypeMismatchException.class)
+  public ResponseEntity<ErrorApiResponse> handleTypeMismatch(org.springframework.web.method.annotation.MethodArgumentTypeMismatchException ex) {
+    if ("tipoVeiculo".equals(ex.getName()) && ex.getRequiredType() != null && ex.getRequiredType().isEnum()) {
+      String message = messageUtil.getMessage(ErrorCode.TIPO_VEICULO_INVALIDO);
+      ErrorApiResponse response = ErrorApiResponse.builder()
+          .message(message)
+          .description("Tipo de veículo deve ser: CARROS, MOTOS ou CAMINHOES")
+          .build();
+      return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(response);
+    }
+    return ResponseEntity.status(HttpStatus.BAD_REQUEST)
+        .body(ErrorApiResponse.builder()
+            .message("Parâmetro inválido")
+            .description(ex.getMessage())
+            .build());
+  }
 }

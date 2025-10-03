@@ -8,7 +8,8 @@ public enum ErrorCode {
   FIPE_LIMITE_EXCEDIDO("fipe.limite.excedido"),
   FIPE_SERVICO_INDISPONIVEL("fipe.servico.indisponivel"),
   FIPE_REQUISICAO_INVALIDA("fipe.requisicao.invalida"),
-  FIPE_DADOS_NAO_ENCONTRADOS("fipe.dados.nao.encontrados");
+  FIPE_DADOS_NAO_ENCONTRADOS("fipe.dados.nao.encontrados"),
+  TIPO_VEICULO_INVALIDO("tipo.veiculo.invalido");
 
   private final String code;
 

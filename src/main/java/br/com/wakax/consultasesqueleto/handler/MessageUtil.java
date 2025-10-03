@@ -16,4 +16,8 @@ public class MessageUtil {
   public String getMessage(ErrorCode errorCode, Object... args) {
     return messageSource.getMessage(errorCode.getCode(), args, Locale.getDefault());
   }
+
+  public String getMessage(ErrorCode errorCode) {
+    return getMessage(errorCode, new Object[0]);
+  }
 }
