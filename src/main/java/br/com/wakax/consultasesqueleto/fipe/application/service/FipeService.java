@@ -1,6 +1,11 @@
 package br.com.wakax.consultasesqueleto.fipe.application.service;
 
-public interface FipeService {
+import br.com.wakax.consultasesqueleto.fipe.domain.Marca;
+import br.com.wakax.consultasesqueleto.fipe.domain.TipoVeiculo;
 
+import java.util.List;
+
+public interface FipeService {
+    List<Marca> listarMarcas(TipoVeiculo tipoVeiculo);
 }
 
