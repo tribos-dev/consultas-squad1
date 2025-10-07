@@ -14,6 +14,6 @@ import java.util.List;
 public interface FipeAPI {
 
     @GetMapping("/marcas")
-    List<Marca> listarMarcas(@RequestParam TipoVeiculo tipoVeiculo);
+    List<Marca>listarMarcas(@RequestParam TipoVeiculo tipoVeiculo);
 }
 

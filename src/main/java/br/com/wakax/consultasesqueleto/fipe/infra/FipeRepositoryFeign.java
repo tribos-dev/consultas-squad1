@@ -20,6 +20,8 @@ public class FipeRepositoryFeign implements FipeRepository {
 
   @Override
   public List<Marca> listarMarcas(TipoVeiculo tipoVeiculo) {
+    log.info("[start] FipeRepositoryFeign - listarMarcas");
+    log.info("[finish] FipeRepositoryFeign - listarMarcas");
     return fipeFeignClient.listarMarcas(tipoVeiculo.getValor())
         .stream()
         .sorted(Comparator.comparing(Marca::nome))

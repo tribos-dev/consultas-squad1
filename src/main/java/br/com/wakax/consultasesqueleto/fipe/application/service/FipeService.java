@@ -6,6 +6,7 @@ import br.com.wakax.consultasesqueleto.fipe.domain.TipoVeiculo;
 import java.util.List;
 
 public interface FipeService {
+
     List<Marca> listarMarcas(TipoVeiculo tipoVeiculo);
 }
 
