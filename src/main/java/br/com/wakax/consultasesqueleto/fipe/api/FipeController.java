@@ -16,7 +16,9 @@ public class FipeController implements FipeAPI {
 
   @Override
   public VeiculoResponseDTO consultarValorVeiculo(String idMarca, String idModelo, String idAno, TipoVeiculo tipoVeiculo) {
-    return null;
+    VeiculoResponseDTO veiculo = fipeService.consultarValorVeiculo(tipoVeiculo, idMarca, idModelo, idAno);
+    log.info("VeiculoResponseDTO a ser retornado: {}", veiculo);
+    return (veiculo);
   }
 }
 

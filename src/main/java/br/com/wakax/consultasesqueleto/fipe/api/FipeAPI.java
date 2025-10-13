@@ -16,6 +16,5 @@ public interface FipeAPI {
             @PathVariable("idModelo") String idModelo,
             @PathVariable("idAno") String idAno,
             @RequestParam("tipoVeiculo") TipoVeiculo tipoVeiculo);
-
 }
 
