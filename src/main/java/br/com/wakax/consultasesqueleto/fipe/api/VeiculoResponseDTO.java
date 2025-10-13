@@ -1,5 +1,6 @@
 package br.com.wakax.consultasesqueleto.fipe.api;
 
+import br.com.wakax.consultasesqueleto.fipe.domain.Veiculo;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 public class VeiculoResponseDTO {
@@ -21,4 +22,16 @@ public class VeiculoResponseDTO {
     String mesReferencia;
     @JsonProperty("SiglaCombustivel")
     String siglaCombustivel;
+
+    public VeiculoResponseDTO(Veiculo veiculoDominio) {
+        this.tipoVeiculo = veiculoDominio.tipoVeiculo();
+        this.valor = veiculoDominio.valor();
+        this.marca = veiculoDominio.marca();
+        this.modelo = veiculoDominio.modelo();
+        this.anoModelo = veiculoDominio.anoModelo();
+        this.combustivel = veiculoDominio.combustivel();
+        this.codigoFipe = veiculoDominio.codigoFipe();
+        this.mesReferencia = veiculoDominio.mesReferencia();
+        this.siglaCombustivel = veiculoDominio.siglaCombustivel();
+    }
 }
