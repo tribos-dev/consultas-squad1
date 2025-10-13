@@ -18,7 +18,6 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 @RequestMapping("/")
 public class ConsultaEsqueletoApplication {
-
   public static void main(String[] args) {
     SpringApplication.run(ConsultaEsqueletoApplication.class, args);
   }

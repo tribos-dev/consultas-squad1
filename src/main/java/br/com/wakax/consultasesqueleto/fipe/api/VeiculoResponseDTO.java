@@ -2,7 +2,9 @@ package br.com.wakax.consultasesqueleto.fipe.api;
 
 import br.com.wakax.consultasesqueleto.fipe.domain.Veiculo;
 import com.fasterxml.jackson.annotation.JsonProperty;
+import lombok.Getter;
 
+@Getter
 public class VeiculoResponseDTO {
     @JsonProperty("TipoVeiculo")
     Integer tipoVeiculo;

@@ -4,11 +4,10 @@ import br.com.wakax.consultasesqueleto.fipe.domain.TipoVeiculo;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.UUID;
-
 @RestController
 @RequestMapping("/fipe")
 public interface FipeAPI {
+
     @GetMapping("/marcas/{idMarca}/modelos/{idModelo}/anos/{idAno}")
     @ResponseStatus(code = HttpStatus.OK)
     VeiculoResponseDTO consultarValorVeiculo (

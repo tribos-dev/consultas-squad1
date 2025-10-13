@@ -1,6 +1,9 @@
 package br.com.wakax.consultasesqueleto.fipe.api;
 
 import br.com.wakax.consultasesqueleto.fipe.domain.TipoVeiculo;
+import br.com.wakax.consultasesqueleto.handler.APIException;
+import br.com.wakax.consultasesqueleto.handler.ErrorCode;
+import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.RestController;
 
 import br.com.wakax.consultasesqueleto.fipe.application.service.FipeService;
