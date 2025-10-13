@@ -1,5 +1,6 @@
 package br.com.wakax.consultasesqueleto.fipe.api;
 
+import br.com.wakax.consultasesqueleto.fipe.domain.TipoVeiculo;
 import org.springframework.web.bind.annotation.RestController;
 
 import br.com.wakax.consultasesqueleto.fipe.application.service.FipeService;
@@ -13,5 +14,9 @@ public class FipeController implements FipeAPI {
 
   private final FipeService fipeService;
 
+  @Override
+  public VeiculoResponseDTO consultarValorVeiculo(String idMarca, String idModelo, String idAno, TipoVeiculo tipoVeiculo) {
+    return null;
+  }
 }
 
