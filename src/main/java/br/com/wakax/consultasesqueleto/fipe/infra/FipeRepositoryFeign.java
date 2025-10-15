@@ -31,10 +31,8 @@ public class FipeRepositoryFeign implements FipeRepository {
       throw new APIException(HttpStatus.NOT_FOUND, ErrorCode.FIPE_DADOS_NAO_ENCONTRADOS);
     }
     log.info("[finish] FipeRepositoryFeign - listarMarcas");
-    return fipeFeignClient.listarMarcas(tipoVeiculo.getValor())
-            .stream()
-            .toList();
-
+    return marcas.stream()
+        .collect(toList());
   }
 }
 
