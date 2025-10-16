@@ -11,10 +11,10 @@ import br.com.wakax.consultasesqueleto.fipe.application.repository.FipeRepositor
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 
-import java.util.Comparator;
+
 import java.util.List;
 
-import static java.util.stream.Collectors.toList;
+
 
 @Repository
 @RequiredArgsConstructor
@@ -31,8 +31,7 @@ public class FipeRepositoryFeign implements FipeRepository {
       throw new APIException(HttpStatus.NOT_FOUND, ErrorCode.FIPE_DADOS_NAO_ENCONTRADOS);
     }
     log.info("[finish] FipeRepositoryFeign - listarMarcas");
-    return marcas.stream()
-        .collect(toList());
+    return marcas;
   }
 }
 
