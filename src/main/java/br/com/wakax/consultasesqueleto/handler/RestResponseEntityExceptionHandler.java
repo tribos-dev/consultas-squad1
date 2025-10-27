@@ -14,6 +14,7 @@ import java.util.HashMap;
 import java.util.Map;
 import feign.FeignException;
 import feign.RetryableException;
+import org.springframework.web.method.annotation.MethodArgumentTypeMismatchException;
 
 @RestControllerAdvice
 @Log4j2
@@ -23,52 +24,48 @@ public class RestResponseEntityExceptionHandler {
   @ExceptionHandler(APIException.class)
   public ResponseEntity<ErrorApiResponse> handlerGenericException(APIException ex) {
     String message =
-        ex.getErrorCode() != null
-            ? messageUtil.getMessage(ex.getErrorCode(), ex.getArgs())
-            : ex.getMessage();
+            ex.getErrorCode() != null
+                    ? messageUtil.getMessage(ex.getErrorCode(), ex.getArgs())
+                    : ex.getMessage();
     ErrorApiResponse response =
-        ErrorApiResponse.builder().message(message).description(ex.getMessage()).build();
+            ErrorApiResponse.builder().message(message).description(ex.getMessage()).build();
     return ResponseEntity.status(ex.getStatusException()).body(response);
   }
+
 
   @ExceptionHandler(Exception.class)
   public ResponseEntity<ErrorApiResponse> handlerGenericException(Exception ex) {
     log.error("Exception: ", ex);
     return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
-        .body(
-            ErrorApiResponse.builder()
-                .description("INTERNAL SERVER ERROR!")
-                .message("POR FAVOR INFORME AO ADMINISTRADOR DO SISTEMA!")
-                .build());
+            .body(
+                    ErrorApiResponse.builder()
+                            .description("INTERNAL SERVER ERROR!")
+                            .message("POR FAVOR INFORME AO ADMINISTRADOR DO SISTEMA!")
+                            .build());
   }
 
   @ExceptionHandler(RetryableException.class)
   public ResponseEntity<ErrorApiResponse> handleFeignRetryable(RetryableException ex) {
     log.error("Erro de comunicação (timeout/rede) com serviço externo via Feign", ex);
     ErrorApiResponse body =
-        ErrorApiResponse.builder()
-            .message("Serviço externo indisponível ou tempo de resposta esgotado.")
-            .description(ex.getMessage())
-            .build();
+            ErrorApiResponse.builder()
+                    .message("Serviço externo indisponível ou tempo de resposta esgotado.")
+                    .description(ex.getMessage())
+                    .build();
     return ResponseEntity.status(HttpStatus.SERVICE_UNAVAILABLE).body(body);
   }
 
   @ExceptionHandler(FeignException.class)
   public ResponseEntity<ErrorApiResponse> handleFeignException(FeignException ex) {
-    log.error("FeignException ao chamar serviço externo. status={} message={}", ex.status(), ex.getMessage());
+    log.error("FeignException não tratada pelo ErrorDecoder. status={} message={}", ex.status(), ex.getMessage());
     HttpStatus status = mapFeignToHttpStatus(ex);
     String description = safeContent(ex);
     if (description == null || description.isBlank()) {
       description = ex.getMessage();
     }
-    String message =
-        switch (status.series()) {
-          case CLIENT_ERROR -> "Erro ao consultar serviço externo.";
-          case SERVER_ERROR -> "Falha no serviço externo.";
-          default -> "Erro de comunicação com serviço externo.";
-        };
+    String message = "Erro ao consultar o serviço externo da Fipe."; // Mensagem mais genérica
     ErrorApiResponse body =
-        ErrorApiResponse.builder().message(message).description(description).build();
+            ErrorApiResponse.builder().message(message).description(description).build();
     return ResponseEntity.status(status).body(body);
   }
 
@@ -106,13 +103,34 @@ public class RestResponseEntityExceptionHandler {
   public Map<String, String> handleValidationExceptions(MethodArgumentNotValidException ex) {
     Map<String, String> errors = new HashMap<>();
     ex.getBindingResult()
-        .getAllErrors()
-        .forEach(
-            (error) -> {
-              String fieldName = ((FieldError) error).getField();
-              String errorMessage = error.getDefaultMessage();
-              errors.put(fieldName, errorMessage);
-            });
+            .getAllErrors()
+            .forEach(
+                    (error) -> {
+                      String fieldName = ((FieldError) error).getField();
+                      String errorMessage = error.getDefaultMessage();
+                      errors.put(fieldName, errorMessage);
+                    });
     return errors;
+  }
+
+  @ExceptionHandler(MethodArgumentTypeMismatchException.class)
+  public ResponseEntity<ErrorApiResponse> handleMethodArgumentTypeMismatch(MethodArgumentTypeMismatchException ex) {
+    log.error("Erro de conversão de argumento de método: {}", ex.getMessage());
+    String fieldName = ex.getName();
+    String requiredType = ex.getRequiredType() != null ? ex.getRequiredType().getSimpleName() : "desconhecido";
+
+    // Verifica se é um erro de conversão para o enum TipoVeiculo
+    if ("tipoVeiculo".equals(fieldName) && "TipoVeiculo".equals(requiredType)) {
+      // Lança sua APIException para que o handler de APIException possa processá-la
+      APIException apiException = new APIException(HttpStatus.BAD_REQUEST, ErrorCode.FIPE_TIPO_VEICULO_INVALIDO);
+      return handlerGenericException(apiException); // Reutiliza o handler de APIException
+    }
+
+    // Para outros erros de MethodArgumentTypeMismatch, retorna uma mensagem genérica
+    ErrorApiResponse response = ErrorApiResponse.builder()
+            .message("Argumento inválido para o campo '" + fieldName + "'.")
+            .description(ex.getMessage())
+            .build();
+    return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(response);
   }
 }

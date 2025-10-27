@@ -4,10 +4,12 @@ br\com\wakax\consultasesqueleto\common\infra\FeignLoggingConfiguration.class
 br\com\wakax\consultasesqueleto\cep\domain\UfInfo.class
 br\com\wakax\consultasesqueleto\fipe\api\FipeController.class
 br\com\wakax\consultasesqueleto\fipe\api\FipeAPI.class
+br\com\wakax\consultasesqueleto\fipe\infra\FeignConfig.class
 br\com\wakax\consultasesqueleto\cep\application\repository\CepRepository.class
 br\com\wakax\consultasesqueleto\handler\ErrorApiResponse$ErrorApiResponseBuilder.class
 br\com\wakax\consultasesqueleto\handler\RestResponseEntityExceptionHandler.class
 br\com\wakax\consultasesqueleto\fipe\api\VeiculoResponseDTO.class
+br\com\wakax\consultasesqueleto\fipe\api\FipeApiErrorDTO.class
 br\com\wakax\consultasesqueleto\handler\ErrorApiResponse.class
 br\com\wakax\consultasesqueleto\handler\APIException.class
 br\com\wakax\consultasesqueleto\fipe\application\service\FipeApplicationService.class
@@ -19,7 +21,6 @@ br\com\wakax\consultasesqueleto\fipe\application\repository\FipeRepository.class
 br\com\wakax\consultasesqueleto\common\CorsConfig.class
 br\com\wakax\consultasesqueleto\cep\infra\CepRepositoryFeign.class
 br\com\wakax\consultasesqueleto\cep\api\CepAPI.class
-br\com\wakax\consultasesqueleto\handler\RestResponseEntityExceptionHandler$1.class
 br\com\wakax\consultasesqueleto\common\domain\ErrorResponse.class
 br\com\wakax\consultasesqueleto\fipe\api\FipeApiResponseDTO.class
 br\com\wakax\consultasesqueleto\fipe\infra\FipeFeignClient.class

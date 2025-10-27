@@ -3,6 +3,9 @@ package br.com.wakax.consultasesqueleto.fipe.infra;
 import br.com.wakax.consultasesqueleto.fipe.api.FipeApiResponseDTO;
 import br.com.wakax.consultasesqueleto.fipe.domain.TipoVeiculo;
 import br.com.wakax.consultasesqueleto.fipe.domain.Veiculo;
+import br.com.wakax.consultasesqueleto.handler.APIException;
+import br.com.wakax.consultasesqueleto.handler.ErrorCode;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Repository;
 
 import br.com.wakax.consultasesqueleto.fipe.application.repository.FipeRepository;
@@ -15,6 +18,7 @@ import lombok.extern.slf4j.Slf4j;
 public class FipeRepositoryFeign implements FipeRepository {
 
   private final FipeFeignClient fipeFeignClient;
+
   @Override
   public Veiculo buscarValorVeiculo(TipoVeiculo tipoVeiculo, String idMarca, String idModelo, String idAno) {
     log.info("Buscando valor do veículo na Fipe para Tipo: {}, Marca: {}, Modelo: {}, Ano: {}",
@@ -39,4 +43,3 @@ public class FipeRepositoryFeign implements FipeRepository {
     return veiculoDominio;
   }
 }
-
