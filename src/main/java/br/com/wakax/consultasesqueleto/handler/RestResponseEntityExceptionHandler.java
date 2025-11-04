@@ -31,8 +31,6 @@ public class RestResponseEntityExceptionHandler {
             ErrorApiResponse.builder().message(message).description(ex.getMessage()).build();
     return ResponseEntity.status(ex.getStatusException()).body(response);
   }
-
-
   @ExceptionHandler(Exception.class)
   public ResponseEntity<ErrorApiResponse> handlerGenericException(Exception ex) {
     log.error("Exception: ", ex);
@@ -118,15 +116,11 @@ public class RestResponseEntityExceptionHandler {
     log.error("Erro de conversão de argumento de método: {}", ex.getMessage());
     String fieldName = ex.getName();
     String requiredType = ex.getRequiredType() != null ? ex.getRequiredType().getSimpleName() : "desconhecido";
-
-    // Verifica se é um erro de conversão para o enum TipoVeiculo
     if ("tipoVeiculo".equals(fieldName) && "TipoVeiculo".equals(requiredType)) {
       // Lança sua APIException para que o handler de APIException possa processá-la
       APIException apiException = new APIException(HttpStatus.BAD_REQUEST, ErrorCode.FIPE_TIPO_VEICULO_INVALIDO);
       return handlerGenericException(apiException); // Reutiliza o handler de APIException
     }
-
-    // Para outros erros de MethodArgumentTypeMismatch, retorna uma mensagem genérica
     ErrorApiResponse response = ErrorApiResponse.builder()
             .message("Argumento inválido para o campo '" + fieldName + "'.")
             .description(ex.getMessage())
