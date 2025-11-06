@@ -34,7 +34,7 @@ public class APIException extends RuntimeException {
     super(message, e);
     this.statusException = statusException;
     this.bodyException =
-        ErrorApiResponse.builder().message(message).description(getDescription(e)).build();
+            ErrorApiResponse.builder().message(message).description(getDescription(e)).build();
   }
 
   public static APIException build(HttpStatus statusException, String message) {
