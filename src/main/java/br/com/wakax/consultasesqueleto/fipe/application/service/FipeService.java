@@ -5,6 +5,7 @@ import br.com.wakax.consultasesqueleto.fipe.domain.ListaModelos;
 import br.com.wakax.consultasesqueleto.fipe.domain.Marca;
 import br.com.wakax.consultasesqueleto.fipe.domain.TipoVeiculo;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpMethod;
@@ -15,9 +16,13 @@ import java.util.List;
 
 public abstract class FipeService {
   @Autowired
-  private RestTemplate restTemplate;
-  private String baseUrl;
-  private String token;
+  protected RestTemplate restTemplate;
+  
+  @Value("${fipe.api.base-url}")
+  protected String baseUrl;
+  
+  @Value("${fipe.api.token:}")
+  protected String token;
 
   private HttpEntity<String> createHttpEntity() {
     HttpHeaders headers = new HttpHeaders();
