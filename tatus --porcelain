@@ -1,0 +1,28 @@
+warning: in the working copy of 'src/main/java/br/com/wakax/consultasesqueleto/fipe/api/FipeAPI.java', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'src/main/java/br/com/wakax/consultasesqueleto/fipe/api/FipeController.java', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'src/main/java/br/com/wakax/consultasesqueleto/fipe/application/repository/FipeRepository.java', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'src/main/java/br/com/wakax/consultasesqueleto/fipe/application/service/FipeApplicationService.java', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'src/main/java/br/com/wakax/consultasesqueleto/fipe/application/service/FipeService.java', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'src/main/java/br/com/wakax/consultasesqueleto/fipe/infra/FipeFeignClient.java', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'src/main/java/br/com/wakax/consultasesqueleto/fipe/infra/FipeRepositoryFeign.java', LF will be replaced by CRLF the next time Git touches it
+M	src/main/java/br/com/wakax/consultasesqueleto/fipe/api/FipeAPI.java
+M	src/main/java/br/com/wakax/consultasesqueleto/fipe/api/FipeController.java
+M	src/main/java/br/com/wakax/consultasesqueleto/fipe/application/repository/FipeRepository.java
+M	src/main/java/br/com/wakax/consultasesqueleto/fipe/application/service/FipeApplicationService.java
+M	src/main/java/br/com/wakax/consultasesqueleto/fipe/application/service/FipeService.java
+M	src/main/java/br/com/wakax/consultasesqueleto/fipe/domain/Veiculo.java
+M	src/main/java/br/com/wakax/consultasesqueleto/fipe/infra/FipeFeignClient.java
+M	src/main/java/br/com/wakax/consultasesqueleto/fipe/infra/FipeRepositoryFeign.java
+M	target/classes/br/com/wakax/consultasesqueleto/cep/domain/Endereco.class
+M	target/classes/br/com/wakax/consultasesqueleto/common/domain/ErrorResponse.class
+M	target/classes/br/com/wakax/consultasesqueleto/fipe/api/FipeAPI.class
+M	target/classes/br/com/wakax/consultasesqueleto/fipe/api/FipeController.class
+M	target/classes/br/com/wakax/consultasesqueleto/fipe/application/repository/FipeRepository.class
+M	target/classes/br/com/wakax/consultasesqueleto/fipe/application/service/FipeApplicationService.class
+M	target/classes/br/com/wakax/consultasesqueleto/fipe/application/service/FipeService.class
+M	target/classes/br/com/wakax/consultasesqueleto/fipe/domain/Veiculo.class
+M	target/classes/br/com/wakax/consultasesqueleto/fipe/infra/FipeFeignClient.class
+M	target/classes/br/com/wakax/consultasesqueleto/fipe/infra/FipeRepositoryFeign.class
+M	target/classes/br/com/wakax/consultasesqueleto/handler/APIException.class
+M	target/classes/br/com/wakax/consultasesqueleto/handler/ErrorApiResponse$ErrorApiResponseBuilder.class
+M	target/classes/br/com/wakax/consultasesqueleto/handler/RestResponseEntityExceptionHandler.class
