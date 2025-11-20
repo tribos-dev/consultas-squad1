@@ -1,11 +1,15 @@
 package br.com.wakax.consultasesqueleto.cep.api;
 
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.http.HttpStatus;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/cep")
 public interface CepAPI {
+
+    @GetMapping(value = "/cep")
+    @ResponseStatus(code = HttpStatus.OK)
+    EnderecoDetalhadoResponse getEnderecoAtravesConsultaAoCEP(@PathVariable String cep);
 
 }
 

@@ -1,5 +1,6 @@
 package br.com.wakax.consultasesqueleto.cep.api;
 
+import br.com.wakax.consultasesqueleto.cep.domain.Endereco;
 import org.springframework.web.bind.annotation.RestController;
 
 import br.com.wakax.consultasesqueleto.cep.application.service.CepService;
@@ -13,5 +14,12 @@ public class CepController implements CepAPI {
 
   private final CepService cepService;
 
+    @Override
+    public EnderecoDetalhadoResponse getEnderecoAtravesConsultaAoCEP(String cep) {
+        log.info("[inicia] CepController - EnderecoDetalhadoResponse");
+
+        log.info("[finaliza] CepController - EnderecoDetalhadoResponse");
+        return null;
+    }
 }
 
