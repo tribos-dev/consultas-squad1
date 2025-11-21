@@ -1,5 +1,6 @@
 package br.com.wakax.consultasesqueleto.cep.infra;
 
+import br.com.wakax.consultasesqueleto.cep.domain.Endereco;
 import org.springframework.stereotype.Repository;
 
 import br.com.wakax.consultasesqueleto.cep.application.repository.CepRepository;

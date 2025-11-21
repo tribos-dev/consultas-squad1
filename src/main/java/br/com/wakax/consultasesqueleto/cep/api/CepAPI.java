@@ -7,9 +7,9 @@ import org.springframework.web.bind.annotation.*;
 @RequestMapping("/cep")
 public interface CepAPI {
 
-    @GetMapping(value = "/cep")
+    @GetMapping(value = "/{cep}")
     @ResponseStatus(code = HttpStatus.OK)
-    EnderecoDetalhadoResponse getEnderecoAtravesConsultaAoCEP(@PathVariable String cep);
+    EnderecoDetalhadoResponse buscaEnderecoPorCep(@PathVariable String cep);
 
 }
 

@@ -1,5 +1,9 @@
 package br.com.wakax.consultasesqueleto.cep.domain;
 
+import lombok.Builder;
+
+@Builder
+
 public record Endereco(
         String cep,
         String logradouro,

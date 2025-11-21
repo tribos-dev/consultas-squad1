@@ -15,11 +15,11 @@ public class CepController implements CepAPI {
   private final CepService cepService;
 
     @Override
-    public EnderecoDetalhadoResponse getEnderecoAtravesConsultaAoCEP(String cep) {
+    public EnderecoDetalhadoResponse buscaEnderecoPorCep(String cep) {
         log.info("[inicia] CepController - EnderecoDetalhadoResponse");
-
+        EnderecoDetalhadoResponse endereco = cepService.buscaEnderecoPorCep(cep);
         log.info("[finaliza] CepController - EnderecoDetalhadoResponse");
-        return null;
+        return endereco;
     }
 }
 
