@@ -18,11 +18,14 @@ import java.util.regex.Pattern;
 @Slf4j
 public class CepApplicationService implements CepService {
 
+    private final CepRepository cepRepository;
+
     @Override
     public EnderecoDetalhadoResponse buscaEnderecoPorCep(String cep) {
         log.info("[inicia] CepApplicationService - buscaEnderecoPorCep");
+        EnderecoDetalhadoResponse endereco = cepRepository.buscaEnderecoPorCep(cep);
         log.info("[finaliza] CepApplicationService - buscaEnderecoPorCep");
-        return null;
+        return endereco;
     }
 }
 
