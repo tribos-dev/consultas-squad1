@@ -1,10 +1,9 @@
 package br.com.wakax.consultasesqueleto.cep.application.service;
 
-import br.com.wakax.consultasesqueleto.cep.api.EnderecoDetalhadoResponse;
-import br.com.wakax.consultasesqueleto.cep.domain.Endereco;
+import br.com.wakax.consultasesqueleto.cep.infra.ViacepResponse;
 
 public interface CepService {
 
-    EnderecoDetalhadoResponse buscaEnderecoPorCep(String cep);
+    ViacepResponse buscaEnderecoPorCep(String cep);
 }
 
