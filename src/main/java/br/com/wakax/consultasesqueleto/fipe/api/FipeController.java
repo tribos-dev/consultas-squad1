@@ -27,8 +27,11 @@ public class FipeController implements FipeAPI {
     }
 
     @Override
-    public List<Modelo> listarModelos(TipoVeiculo tipoVeiculo) {
-        return List.of();
+    public List<Modelo> listarModelos(String codigoMarca, TipoVeiculo tipoVeiculo) {
+        log.info("[start] FipeController - listarModelos");
+        List<Modelo> modelos = fipeService.listarModelos(codigoMarca, tipoVeiculo);
+        log.info("[finish] FipeController - listarModelos");
+        return modelos;
     }
 }
 

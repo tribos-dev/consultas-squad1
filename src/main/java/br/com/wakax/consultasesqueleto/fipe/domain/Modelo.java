@@ -1,6 +1,5 @@
 package br.com.wakax.consultasesqueleto.fipe.domain;
 
-public class Modelo {
-
+public record Modelo(String codigo, String nome) {
 
 }
