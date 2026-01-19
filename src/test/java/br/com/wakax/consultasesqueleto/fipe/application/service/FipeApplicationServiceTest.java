@@ -2,6 +2,7 @@ package br.com.wakax.consultasesqueleto.fipe.application.service;
 
 import br.com.wakax.consultasesqueleto.fipe.application.repository.FipeRepository;
 import br.com.wakax.consultasesqueleto.fipe.domain.Marca;
+import br.com.wakax.consultasesqueleto.fipe.domain.Modelo;
 import br.com.wakax.consultasesqueleto.fipe.domain.TipoVeiculo;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -26,7 +27,7 @@ class FipeApplicationServiceTest {
 
     @Test
     void deveListarMarcasComSucesso() {
-     
+
         TipoVeiculo tipoVeiculo = TipoVeiculo.CARROS;
         List<Marca> marcasEsperadas = List.of(
                 new Marca("1", "Fiat"),
@@ -36,5 +37,20 @@ class FipeApplicationServiceTest {
         List<Marca> resultado = fipeApplicationService.listarMarcas(tipoVeiculo);
         assertEquals(marcasEsperadas, resultado);
         verify(fipeRepository).listarMarcas(tipoVeiculo);
+    }
+
+    @Test
+    void deveListarModelosComSucesso() {
+
+        String codigoMarca = "21";
+        String tipoVeiculo = "CARROS";
+        List<Modelo> modelos = List.of(
+                new Modelo("1", "Argo"),
+                new Modelo("2", "Palio")
+        );
+        when(fipeRepository.listarModelos(codigoMarca, tipoVeiculo)).thenReturn(modelos);
+        List<Modelo> resultado = fipeApplicationService.listarModelos(codigoMarca, tipoVeiculo);
+        assertEquals(modelos, resultado);
+        verify(fipeRepository).listarModelos(codigoMarca, tipoVeiculo);
     }
 }
