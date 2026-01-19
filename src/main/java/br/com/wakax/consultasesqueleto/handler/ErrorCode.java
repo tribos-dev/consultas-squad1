@@ -9,7 +9,6 @@ public enum ErrorCode {
   FIPE_SERVICO_INDISPONIVEL("fipe.servico.indisponivel"),
   FIPE_REQUISICAO_INVALIDA("fipe.requisicao.invalida"),
   FIPE_DADOS_NAO_ENCONTRADOS("fipe.dados.nao.encontrados");
-
   private final String code;
 
   ErrorCode(String code) {
