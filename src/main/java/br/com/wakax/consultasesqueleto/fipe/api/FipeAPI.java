@@ -5,6 +5,7 @@ import br.com.wakax.consultasesqueleto.fipe.domain.Modelo;
 import br.com.wakax.consultasesqueleto.fipe.domain.TipoVeiculo;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.constraints.Pattern;
 import java.util.List;
 
 @RestController
@@ -16,7 +17,10 @@ public interface FipeAPI {
 
     @GetMapping("/marcas/{codigoMarca}/modelos")
     List<Modelo> listarModelos(@PathVariable String codigoMarca,
-            @RequestParam TipoVeiculo tipoVeiculo);
+                               @RequestParam
+                               @Pattern(regexp = "CARROS|MOTOS|CAMINHOES",
+                                       message = "Tipo de veículo inválido")
+                               String tipoVeiculo);
 
 }
 

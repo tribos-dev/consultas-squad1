@@ -13,6 +13,7 @@ public interface FipeFeignClient {
 
     @GetMapping("/{tipoVeiculo}/marcas")
     List<Marca> listarMarcas(@PathVariable("tipoVeiculo") String tipoVeiculo);
+
     @GetMapping("/{tipoVeiculo}/marcas/{codigoMarca}/modelos")
     ModelosResponse listarModelos(
             @PathVariable("tipoVeiculo") String tipoVeiculo,

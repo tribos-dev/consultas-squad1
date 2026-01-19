@@ -16,22 +16,22 @@ import java.util.List;
 @Slf4j
 public class FipeApplicationService implements FipeService {
 
-  private final FipeRepository fipeRepository;
+    private final FipeRepository fipeRepository;
 
-  @Override
-  public List<Marca> listarMarcas(TipoVeiculo tipoVeiculo) {
-    log.info("[start] FipeApplicationService - listarMarcas");
-    List<Marca> marcas = fipeRepository.listarMarcas(tipoVeiculo);
-    log.info("[finish] FipeApplicationService - listarMarcas");
-    return marcas;
-  }
+    @Override
+    public List<Marca> listarMarcas(TipoVeiculo tipoVeiculo) {
+        log.info("[start] FipeApplicationService - listarMarcas");
+        List<Marca> marcas = fipeRepository.listarMarcas(tipoVeiculo);
+        log.info("[finish] FipeApplicationService - listarMarcas");
+        return marcas;
+    }
 
-  @Override
-  public List<Modelo> listarModelos(String codigoMarca, TipoVeiculo tipoVeiculo) {
-    log.info("[start] FipeApplicationService - listarModelos");
-    List<Modelo> modelos = fipeRepository.listarModelos(codigoMarca, tipoVeiculo);
-    log.info("[finish] FipeApplicationService - listarModelos");
-    return modelos;
-  }
+    @Override
+    public List<Modelo> listarModelos(String codigoMarca, String tipoVeiculo) {
+        log.info("[start] FipeApplicationService - listarModelos");
+        List<Modelo> modelos = fipeRepository.listarModelos(codigoMarca, tipoVeiculo);
+        log.info("[finish] FipeApplicationService - listarModelos");
+        return modelos;
+    }
 }
 

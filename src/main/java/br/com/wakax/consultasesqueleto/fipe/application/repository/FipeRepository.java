@@ -9,6 +9,6 @@ import java.util.List;
 public interface FipeRepository {
 
     List<Marca> listarMarcas(TipoVeiculo tipoVeiculo);
-    List<Modelo> listarModelos(String codigoMarca, TipoVeiculo tipoVeiculo);
+    List<Modelo> listarModelos(String codigoMarca, String tipoVeiculo);
 }
 

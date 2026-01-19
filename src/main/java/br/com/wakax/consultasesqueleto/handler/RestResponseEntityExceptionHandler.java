@@ -15,6 +15,8 @@ import java.util.Map;
 import feign.FeignException;
 import feign.RetryableException;
 
+import javax.validation.ConstraintViolationException;
+
 @RestControllerAdvice
 @Log4j2
 public class RestResponseEntityExceptionHandler {
@@ -29,6 +31,16 @@ public class RestResponseEntityExceptionHandler {
     ErrorApiResponse response =
         ErrorApiResponse.builder().message(message).description(ex.getMessage()).build();
     return ResponseEntity.status(ex.getStatusException()).body(response);
+  }
+  @ExceptionHandler(ConstraintViolationException.class)
+  @ResponseStatus(HttpStatus.BAD_REQUEST)
+  public ErrorApiResponse handleConstraintViolation(ConstraintViolationException ex) {
+    log.error("Erro de validação: {}", ex.getMessage());
+
+    return ErrorApiResponse.builder()
+            .message("TIPO_VEICULO_INVALIDO")
+            .description("Tipo de veículo inválido. Use: CARROS, MOTOS ou CAMINHOES")
+            .build();
   }
 
   @ExceptionHandler(Exception.class)
